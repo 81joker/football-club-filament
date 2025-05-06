@@ -26,14 +26,15 @@ class Order extends Model
         'status' => 'boolean',
         'type' => OrderStatusEnum::class,
     ];
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 
 }
