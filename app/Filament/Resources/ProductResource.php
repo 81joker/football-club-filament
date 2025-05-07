@@ -54,6 +54,18 @@ class ProductResource extends Resource
                                     ->maxLength(65535)->columnSpan('full'),
 
                             ])->columns(2),
+                            Section::make('Pricing & Inventory')
+                            ->schema([
+                                TextInput::make('sku'),
+                                TextInput::make('price'),
+                                TextInput::make('quantity'),
+                                Select::make('type')
+                                    ->options([
+                                        'deliverable' => ProductTypeEnum::DELIVERABLE->value,
+                                        'downloadable' => ProductTypeEnum::DOWNLOADABLE->value,
+                                    ])
+                                    ->required(),
+                            ])->columns(2)
                     ]),
                 Group::make()
                     ->schema([
@@ -72,25 +84,25 @@ class ProductResource extends Resource
                                     ->schema([
                                         FileUpload::make('image'),
                                     ])->columnSpan('full'),
-                            
+
                         ]),
-                    
-                    
-                Group::make()
-                    ->schema([
-                        Section::make('Pricing & Inventory')
-                            ->schema([
-                                TextInput::make('sku'),
-                                TextInput::make('price'),
-                                TextInput::make('quantity'),
-                                Select::make('type')
-                                    ->options([
-                                        'deliverable' => ProductTypeEnum::DELIVERABLE->value,
-                                        'downloadable' => ProductTypeEnum::DOWNLOADABLE->value,
-                                    ])
-                                    ->required(),
-                            ])->columns(2),
-                    ])
+
+
+                // Group::make()
+                //     ->schema([
+                //         Section::make('Pricing & Inventory')
+                //             ->schema([
+                //                 TextInput::make('sku'),
+                //                 TextInput::make('price'),
+                //                 TextInput::make('quantity'),
+                //                 Select::make('type')
+                //                     ->options([
+                //                         'deliverable' => ProductTypeEnum::DELIVERABLE->value,
+                //                         'downloadable' => ProductTypeEnum::DOWNLOADABLE->value,
+                //                     ])
+                //                     ->required(),
+                //             ])->columns(2),
+                //     ])
 
             ]);
     }
@@ -105,7 +117,7 @@ class ProductResource extends Resource
                 IconColumn::make('is_visible')->boolean(),
                 TextColumn::make('price'),
                 TextColumn::make('quantity'),
-                TextColumn::make('published_at'),
+                TextColumn::make('published_at')->date(),
                 // TextColumn::make('brand.name')
                 //     ->sortable()
                 //     ->searchable()
