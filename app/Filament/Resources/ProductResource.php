@@ -30,11 +30,12 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-archive-box-arrow-down';
 
     protected static ?string $navigationLabel = 'Products';
 
-    // protected static ?string $navigationGroup = 'Shops';
+    // To responsiple for the navigation group
+    protected static ?string $navigationGroup = 'Shops';
     public static function form(Form $form): Form
     {
         return $form
@@ -54,6 +55,9 @@ class ProductResource extends Resource
                                     ->maxLength(65535)->columnSpan('full'),
 
                             ])->columns(2),
+
+
+                                       
                             Section::make('Pricing & Inventory')
                             ->schema([
                                 TextInput::make('sku'),
@@ -65,7 +69,8 @@ class ProductResource extends Resource
                                         'downloadable' => ProductTypeEnum::DOWNLOADABLE->value,
                                     ])
                                     ->required(),
-                            ])->columns(2)
+                            ])->columns(2),
+ 
                     ]),
                 Group::make()
                     ->schema([
@@ -83,11 +88,20 @@ class ProductResource extends Resource
                             Section::make('Image')
                                     ->schema([
                                         FileUpload::make('image'),
-                                    ])->columnSpan('full'),
-
+                                    ])->collapsed(),
+                            
+                            Section::make('Associations ')
+                                    ->schema([
+                                        Select::make('brand_id')
+                                            ->relationship('brand', 'name')
+                                            ->required()
+                                            ->preload()
+                                            ->searchable()
+                                    ]),
+                            
                         ]),
-
-
+                    
+                    
                 // Group::make()
                 //     ->schema([
                 //         Section::make('Pricing & Inventory')
@@ -117,7 +131,7 @@ class ProductResource extends Resource
                 IconColumn::make('is_visible')->boolean(),
                 TextColumn::make('price'),
                 TextColumn::make('quantity'),
-                TextColumn::make('published_at')->date(),
+                TextColumn::make('published_at'),
                 // TextColumn::make('brand.name')
                 //     ->sortable()
                 //     ->searchable()
