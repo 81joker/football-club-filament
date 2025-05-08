@@ -6,6 +6,7 @@ use App\Filament\Resources\BrandResource\Pages;
 use App\Filament\Resources\BrandResource\RelationManagers;
 use App\Models\Brand;
 use Faker\Core\Color;
+use Filament\Actions\ActionGroup;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -25,7 +26,7 @@ class BrandResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?int $navigationSort = 0;
-    protected static ?string $navigationGroup = 'Shops';
+    protected static ?string $navigationGroup = 'Shop';
 
     public static function form(Form $form): Form
     {
@@ -88,31 +89,31 @@ class BrandResource extends Resource
     {
         return $table
             ->columns([
-                // TextColumn::make('name')->sortable()->searchable(),
-                // TextColumn::make('url')->sortable()->searchable()->label('Website Url'),
-                // ColorColumn::make('primary_hex')->sortable()->searchable()->label('Primary Color'),
-                // IconColumn::make('is_visible')->boolean()->sortable()->searchable()->label('Visible'),
-                // TextColumn::make('updated_at')->date()->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable()
-                    ->sortable(),
+                TextColumn::make('name')->sortable()->searchable(),
+                TextColumn::make('url')->sortable()->searchable()->label('Website Url'),
+                ColorColumn::make('primary_hex')->sortable()->searchable()->label('Primary Color'),
+                IconColumn::make('is_visible')->boolean()->sortable()->searchable()->label('Visible'),
+                TextColumn::make('updated_at')->date()->sortable()->searchable(),
+                // Tables\Columns\TextColumn::make('name')
+                //     ->searchable()
+                //     ->sortable(),
 
-                Tables\Columns\TextColumn::make('url')
-                    ->label('Website URL')
-                    ->sortable()
-                    ->searchable(),
+                // Tables\Columns\TextColumn::make('url')
+                //     ->label('Website URL')
+                //     ->sortable()
+                //     ->searchable(),
 
-                Tables\Columns\ColorColumn::make('primary_hex')
-                    ->label('Primary Color'),
+                // Tables\Columns\ColorColumn::make('primary_hex')
+                //     ->label('Primary Color'),
 
-                Tables\Columns\IconColumn::make('is_visible')
-                    ->boolean()
-                    ->sortable()
-                    ->label('Visibility'),
+                // Tables\Columns\IconColumn::make('is_visible')
+                //     ->boolean()
+                //     ->sortable()
+                //     ->label('Visibility'),
 
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->date()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('updated_at')
+                //     ->date()
+                //     ->sortable(),
 
 
             ])
@@ -120,8 +121,16 @@ class BrandResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                   Tables\Actions\DeleteAction::make(),
+                ])
+                // Tables\Actions\ForceDeleteAction::make(),
+                // Tables\Actions\RestoreAction::make(),
+                // Tables\Actions\ReplicateAction::make(),
             ])
+            // ],position: Tables\Enums\ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

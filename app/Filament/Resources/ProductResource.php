@@ -34,7 +34,7 @@ class ProductResource extends Resource
     protected static ?string $navigationLabel = 'Products';
 
     // To responsiple for the navigation group
-    protected static ?string $navigationGroup = 'Shops';
+    protected static ?string $navigationGroup = 'Shop';
     public static function form(Form $form): Form
     {
         return $form
@@ -78,7 +78,7 @@ class ProductResource extends Resource
                                 ->required()
                                 ->unique( Product::class, 'slug', ignoreRecord: true)
                                   ,
-                           
+
                                 MarkdownEditor::make('description')
                                     ->required()
                                     ->maxLength(65535)->columnSpan('full'),
@@ -86,7 +86,7 @@ class ProductResource extends Resource
                             ])->columns(2),
 
 
-                                       
+
                             Section::make('Pricing & Inventory')
                             ->schema([
                                 // sku Stock keeping unit[ unique alphanumeric code assigned to a product by a business, primarily used for inventory management and tracking.]
@@ -119,7 +119,7 @@ class ProductResource extends Resource
                                     ])
                                     ->required(),
                             ])->columns(2),
- 
+
                     ]),
                 Group::make()
                     ->schema([
@@ -147,10 +147,10 @@ class ProductResource extends Resource
                             ->preserveFilenames()
                             ->image()
                             ->imageEditor()
-                            
+
                             ,
                                     ])->collapsed(),
-                            
+
                             Section::make('Associations ')
                                     ->schema([
                                         Select::make('brand_id')
@@ -159,10 +159,10 @@ class ProductResource extends Resource
                                             ->preload()
                                             ->searchable()
                                     ]),
-                            
+
                         ]),
-                    
-                    
+
+
                 // Group::make()
                 //     ->schema([
                 //         Section::make('Pricing & Inventory')
@@ -191,8 +191,8 @@ class ProductResource extends Resource
                 TextColumn::make('brand.name')->sortable()->searchable()->toggleable('Brand'),
                 // IconColumn::make('is_visible')->boolean()->sortable()->searchable()->toggleable()->label('Visible'),
                 IconColumn::make('is_visible')->boolean()->trueIcon('heroicon-o-eye')->falseIcon('heroicon-o-eye-slash')->sortable()->searchable()->toggleable()->label('Visible'),
-               
-               
+
+
                 TextColumn::make('price')->sortable()->searchable(),
                 TextColumn::make('quantity')->sortable()->searchable(),
                 TextColumn::make('published_at')->sortable()->searchable()->date()->sortable(),
@@ -220,7 +220,7 @@ class ProductResource extends Resource
                 Tables\Filters\SelectFilter::make('brand')->relationship('brand', 'name'),
 
 
- 
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
