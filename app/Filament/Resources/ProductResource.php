@@ -63,7 +63,7 @@ class ProductResource extends Resource
                                     ->required()
                                     ->live(onBlur: true)
                                     ->maxLength(255)
-                                    ->unique()
+                                    // ->unique()
                                     ->afterStateUpdated(function (string $operation, $state, Forms\Set $set ) {
                                         if ($operation !== 'create') {
                                             return;
@@ -90,7 +90,7 @@ class ProductResource extends Resource
                             Section::make('Pricing & Inventory')
                             ->schema([
                                 // sku Stock keeping unit[ unique alphanumeric code assigned to a product by a business, primarily used for inventory management and tracking.]
-                                TextInput::make('sku')->label('SKU (Stock Keeping Unit)' )->required()->unique(),
+                                TextInput::make('sku')->label('SKU (Stock Keeping Unit)' )->required(),
 
                                 TextInput::make('price')
                                 ->numeric()
@@ -189,8 +189,6 @@ class ProductResource extends Resource
                 ImageColumn::make('image'),
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('brand.name')->sortable()->searchable()->toggleable('Brand'),
-
-                
                 // IconColumn::make('is_visible')->boolean()->sortable()->searchable()->toggleable()->label('Visible'),
                 IconColumn::make('is_visible')->boolean()->trueIcon('heroicon-o-eye')->falseIcon('heroicon-o-eye-slash')->sortable()->searchable()->toggleable()->label('Visible'),
                
