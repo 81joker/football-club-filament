@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->string('url')->nullable();
-            $table->string(' primary_hex')->nullable();
+            $table->string('primary_hex')->nullable();
             $table->boolean('is_visible')->default(false);
             // $table->string('logo')->nullable();
             // $table->string('website')->nullable();
