@@ -24,12 +24,44 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Select;
 use App\Enums\ProductTypeEnum;
 use Faker\Core\File;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-archive-box-arrow-down';
+
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+
+
+    protected static int $globalSearchResultsLimit = 20;
+
+    public static function getGloballySearchableAttributes(): array
+{
+    return ['name', 'slug', 'description' , 'brand.name'];
+}
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()
+            ->with('brand');
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'ID' => $record->id,
+            'Brand' => $record->brand->name,
+            'Price' => $record->price,
+            'Description' => $record->description,
+            'Quantity' => $record->quantity
+        ];
+        
+    }
 
     protected static ?string $navigationLabel = 'Products';
 

@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Customer;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\OrderItem;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Order extends Model
 {
@@ -32,9 +35,16 @@ class Order extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function items()
+    public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
 
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'order_items')
+            ->using(OrderItem::class)
+            ->withPivot(['quantity', 'unit_price'])
+            ->withTimestamps();
+    }
 }

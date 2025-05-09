@@ -62,7 +62,7 @@ class OrderResource extends Resource
                                     'cancelled' => OrderStatusEnum::DECLINED->value,
                                 ])->columnSpanFull()->required(),
 
-                            Forms\Components\markdownEditor::make('notes')
+                            Forms\Components\MarkdownEditor::make('notes')
                                 ->columnSpanFull()
                                ,
 
@@ -95,12 +95,32 @@ class OrderResource extends Resource
                                     ->numeric()
                                     ->required(),
 
-                                Forms\Components\Placeholder::make('total_price')
-                                    ->label('Total Price')
-                                    ->content(function ($get) {
-                                        return $get('quantity') * $get('unit_price');
-                                    })
-                            ])->columns(4)
+                            //     Forms\Components\Placeholder::make('total_price')
+                            //         ->label('Total Price')
+                            //         ->content(function ($get) {
+                            //             return $get('quantity') * $get('unit_price');
+                            //         })
+                            // ])->columns(4)
+                            Forms\Components\Placeholder::make('total_price')
+                            ->label('Total Price')
+                            ->content(function ($get) {
+                                return number_format($get('quantity') * $get('unit_price'), 2);
+                            })
+                    ])
+                    ->columns(4)
+                    ->live()
+                    ->afterStateUpdated(function ($state, Forms\Set $set) {
+                        $total = collect($state)->sum(fn ($item) => 
+                            ($item['quantity'] ?? 0) * ($item['unit_price'] ?? 0)
+                        );
+                        $set('total_price', $total);
+                    }),
+                    
+                Forms\Components\Hidden::make('total_price')
+                    // ->numeric()
+                    ->required()
+                    ->disabled()
+                    ->dehydrated(),
                         ])
                 ])->columnSpanFull()
             ]);

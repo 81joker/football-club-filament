@@ -42,6 +42,14 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
+    public function orders(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class, 'order_items')
+            ->using(OrderItem::class)
+            ->withPivot(['quantity', 'unit_price'])
+            ->withTimestamps();
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';
