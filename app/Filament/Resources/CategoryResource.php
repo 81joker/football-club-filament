@@ -23,6 +23,8 @@ class CategoryResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    // This is responsible for the display of the category in the sidebar or not
+    protected static bool $shouldRegisterNavigation = true;
     protected static ?string $navigationGroup = 'Shop';
 
     public static function form(Form $form): Form

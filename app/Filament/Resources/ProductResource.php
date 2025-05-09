@@ -36,20 +36,24 @@ class ProductResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-
-
     protected static int $globalSearchResultsLimit = 20;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+
+    }
 
     public static function getGloballySearchableAttributes(): array
 {
     return ['name', 'slug', 'description' , 'brand.name'];
 }
 
-    public static function getGlobalSearchEloquentQuery(): Builder
-    {
-        return parent::getGlobalSearchEloquentQuery()
-            ->with('brand');
-    }
+    // public static function getGlobalSearchEloquentQuery(): Builder
+    // {
+    //     return parent::getGlobalSearchEloquentQuery()
+    //         ->with('brand');
+    // }
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
@@ -60,7 +64,7 @@ class ProductResource extends Resource
             'Description' => $record->description,
             'Quantity' => $record->quantity
         ];
-        
+
     }
 
     protected static ?string $navigationLabel = 'Products';

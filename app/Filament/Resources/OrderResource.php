@@ -24,18 +24,18 @@ class OrderResource extends Resource
 
     protected static ?string $navigationGroup = 'Shop';
 
-    // public static function getNavigationBadge(): ?string
-    // {
-    //     return static::getModel()::where('status', '=', 'processing')->count();
-    // }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', '=', 'processing')->count();
+    }
 
-    // public static function getNavigationBadgeColor(): ?string
-    // {
-    //     return static::getModel()::where('status', '=', 'processing')->count() > 10
-    //         ? 'warning'
-    //         : 'primary';
-    // }
-    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return static::getModel()::where('status', '=', 'processing')->count() > 10
+            ? 'warning'
+            : 'primary';
+    }
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 
     public static function form(Form $form): Form
     {
@@ -110,12 +110,12 @@ class OrderResource extends Resource
                     ->columns(4)
                     ->live()
                     ->afterStateUpdated(function ($state, Forms\Set $set) {
-                        $total = collect($state)->sum(fn ($item) => 
+                        $total = collect($state)->sum(fn ($item) =>
                             ($item['quantity'] ?? 0) * ($item['unit_price'] ?? 0)
                         );
                         $set('total_price', $total);
                     }),
-                    
+
                 Forms\Components\Hidden::make('total_price')
                     // ->numeric()
                     ->required()

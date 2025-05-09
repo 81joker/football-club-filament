@@ -10,6 +10,7 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Navigation\NavigationItem;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -17,6 +18,10 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Navigation\MenuItem;
+use App\Filament\Pages\Settings;
+
+
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -32,6 +37,30 @@ class AdminPanelProvider extends PanelProvider
             ])->font('Nunito')
 
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
+            // ->sidebarCollapsibleOnDesktop()
+            // ->sidebarFullyCollapsibleOnDesktop()
+            ->navigationItems([
+                NavigationItem::make('Blog')
+                ->url('/admin/dashboard', shouldOpenInNewTab: true)
+                ->icon('heroicon-o-pencil-square')
+                ->group('Blog')
+                ->sort(1),
+
+
+            ])
+
+            ->userMenuItems(items: [
+                MenuItem::make()
+                ->label('Settings')
+                // ->url(fn (): string => Settings::getUrl())
+                ->icon('heroicon-m-cog-8-tooth'),
+                'logout' => MenuItem::make()->label('Logout'),
+
+
+                // MenuItem::make()->label('Logout')->url('/logout')->icon('heroicon-o-logout'),
+            ])
+
+            // ->brodcrumbs(false)
             // poppins
             ->favicon('images/favicon.png')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
