@@ -193,27 +193,18 @@ class ProductResource extends Resource
                                             ->relationship('brand', 'name')
                                             ->required()
                                             ->preload()
-                                            ->searchable()
-                                    ]),
+                                            ->searchable(),
 
+                                            Forms\Components\Select::make('categories')
+                                                ->relationship('categories', 'name')
+                                                ->multiple()
+                                                ->required(),
+                                                // ->preload()
+                                                // ->searchable(),
+                                    ]),
                         ]),
 
 
-                // Group::make()
-                //     ->schema([
-                //         Section::make('Pricing & Inventory')
-                //             ->schema([
-                //                 TextInput::make('sku'),
-                //                 TextInput::make('price'),
-                //                 TextInput::make('quantity'),
-                //                 Select::make('type')
-                //                     ->options([
-                //                         'deliverable' => ProductTypeEnum::DELIVERABLE->value,
-                //                         'downloadable' => ProductTypeEnum::DOWNLOADABLE->value,
-                //                     ])
-                //                     ->required(),
-                //             ])->columns(2),
-                //     ])
 
             ]);
     }
