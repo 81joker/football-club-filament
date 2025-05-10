@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete('cascade');
             $table->string('number')->unique();
-            $table->decimal('total_price');
+            $table->decimal('total_price', 10, 2);
             $table->decimal('shipping_price')->nullable();
             $table->enum('status', ['pending','processing', 'completed', 'declined'])->default('pending');
             $table->longText('notes')->nullable();
