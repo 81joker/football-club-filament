@@ -17,17 +17,13 @@ class Order extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'customer_id',
-        'number',
-        'total_price',
-        'shipping_price',
-        'status',
-        'notes',
+        'customer_id', 'number', 'total_price', 'status', 'shipping_price', 'notes'
+
     ];
 
     protected $casts = [
-        'status' => 'boolean',
-        'type' => OrderStatusEnum::class,
+        // 'status' => 'boolean',
+        'status' => OrderStatusEnum::class,
     ];
 
     public function customer()
@@ -40,11 +36,11 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function products(): BelongsToMany
-    {
-        return $this->belongsToMany(Product::class, 'order_items')
-            ->using(OrderItem::class)
-            ->withPivot(['quantity', 'unit_price'])
-            ->withTimestamps();
-    }
+    // public function products(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Product::class, 'order_items')
+    //         ->using(OrderItem::class)
+    //         ->withPivot(['quantity', 'unit_price'])
+    //         ->withTimestamps();
+    // }
 }

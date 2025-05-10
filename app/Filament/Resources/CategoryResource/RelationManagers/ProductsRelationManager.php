@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Filament\Resources\BrandResource\RelationManagers;
+namespace App\Filament\Resources\CategoryResource\RelationManagers;
 
-use App\Enums\ProductTypeEnum;
-use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -11,6 +9,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\ActionGroup;
+use App\Enums\ProductTypeEnum;
+use App\Models\Product;
 use Illuminate\Support\Str;
 
 class ProductsRelationManager extends RelationManager
@@ -19,6 +20,7 @@ class ProductsRelationManager extends RelationManager
 
     public function form(Form $form): Form
     {
+
         return $form
             ->schema([
                 Forms\Components\Tabs::make('Products')
@@ -28,7 +30,7 @@ class ProductsRelationManager extends RelationManager
                                 Forms\Components\TextInput::make('name')
                                     ->required()
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function(string $operation, $state, Forms\Set $set) {
+                                    ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
                                         if ($operation !== 'create') {
                                             return;
                                         }
@@ -98,6 +100,7 @@ class ProductsRelationManager extends RelationManager
                     ])->columnSpanFull()
             ]);
     }
+
 
     public function table(Table $table): Table
     {

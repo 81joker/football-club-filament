@@ -142,8 +142,6 @@ class BrandResource extends Resource
     {
         return [
             RelationManagers\ProductsRelationManager::class
-
-
         ];
     }
 
